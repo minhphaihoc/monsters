@@ -110,12 +110,14 @@
 	};
 
 	var renderCongratsMessage = function () {
-		app.innerHTML = '<h2>Congrats! You\'ve WON!</h2>' +
+		app.innerHTML = '<h2>Congrats! You\'re amazing.</h2>' +
+			'<p><img src="img/congrats.gif" alt="Congrats Image"></p>' +
 			'<button id="start-game" class="btn">Play Again</button>';
 	};
 
 	var renderFailMessage = function () {
-		app.innerHTML = '<h2>Sorry! You\'ve LOST the game!</h2>' +
+		app.innerHTML = '<h2>Sorry. It\'s just a bad day not a bad life.</h2>' +
+			'<p><img src="img/sorry.gif" alt="Sorry Image"></p>' +
 			'<button id="start-game" class="btn">Play Again</button>';
 	};
 
