@@ -16,7 +16,6 @@
 		'monster11.svg'
 	];
 	var shuffledMonsters = [];
-	var status = 'playing';
 	var monstersFound = 0;
 	var app = document.querySelector('#app');
 
@@ -47,15 +46,10 @@
 
 	};
 
-	var resetData = function () {
-		status = 'playing';
-	 	monstersFound = 0;
-		shuffledMonsters = shuffle(monsters.slice());
-	};
-
 	var startGame = function () {
 		// Reset data everytime user starts a new game
-		resetData();
+		monstersFound = 0;
+		shuffledMonsters = shuffle(monsters.slice());
 		var content = '';
 
 		// Loop through data and render the markup
@@ -85,48 +79,36 @@
 			// Open the door
 			door.classList.add('is-opened');
 
-			calculateStatus(door);
+			calculateResult(door);
 		}
 	};
 
-	var calculateStatus = function(door) {
+	var calculateResult = function(door) {
 		var monster = door.querySelector('.monster-image');
 
 		// If user found a monster
 		if (monster) {
 			monstersFound++;
 
-			// If user found all monsters, change status to "win"
+			// If user found all monsters, show winning result
 			if (monstersFound === shuffledMonsters.length - 1) {
-				status = 'win';
+				showResult('win');
 			}
 		} else {
-			// If user found a sock, change status to "lose"
-			status = 'lose';
+			// Show losing result
+			showResult('lose');
 		}
-
-		// Show the result right away if status is "win" or "lose"
-		showResult(status);
-	};
-
-	var renderCongratsMessage = function () {
-		app.innerHTML = '<h2>Congrats! You\'re amazing.</h2>' +
-			'<p><img src="img/congrats.gif" alt="Congrats Image"></p>' +
-			'<button id="start-game" class="btn">Play Again</button>';
-	};
-
-	var renderFailMessage = function () {
-		app.innerHTML = '<h2>Sorry. It\'s just a bad day not a bad life.</h2>' +
-			'<p><img src="img/sorry.gif" alt="Sorry Image"></p>' +
-			'<button id="start-game" class="btn">Play Again</button>';
 	};
 
 	var showResult = function (status) {
-		if (status === 'win') {
-			renderCongratsMessage();
-		} else if (status === 'lose') {
-			renderFailMessage();
-		}
+		var result = status === 'win' ?
+			'<h2>Congrats! You\'re amazing.</h2>' +
+			'<p><img src="img/congrats.gif" alt="Congrats Image"></p>' :
+			'<h2>Sorry. It\'s just a bad day, not a bad life.</h2>' +
+			'<p><img src="img/sorry.gif" alt="Sorry Image"></p>';
+
+		app.innerHTML = result +
+			'<button id="start-game" class="btn">Play Again</button>';
 	};
 
 	// Start a new name when the page loaded
